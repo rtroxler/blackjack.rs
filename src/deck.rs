@@ -4,13 +4,13 @@ use std::fmt;
 
 #[allow(dead_code)]
 #[derive(Debug)]
-enum Suit {
+pub enum Suit {
     Diamonds, Hearts, Spades, Clubs
 }
 
 #[allow(dead_code)]
 #[derive(Debug)]
-enum Value {
+pub enum Value {
     Ace,
     Two,
     Three,
@@ -26,11 +26,34 @@ enum Value {
     King
 }
 
-pub struct Card(Value, Suit);
+pub struct Card {
+    pub value: Value,
+    suit: Suit,
+}
 
 impl fmt::Debug for Card {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?} - {:?}", self.0, self.1)
+        write!(f, "{:?} - {:?}", self.value, self.suit)
+    }
+}
+
+impl Card {
+    pub fn value(&self) -> i32 {
+        match self.value {
+            Value::Ace => 11,
+            Value::Two => 2,
+            Value::Three => 3,
+            Value::Four => 4,
+            Value::Five => 5,
+            Value::Six => 6,
+            Value::Seven => 7,
+            Value::Eight => 8,
+            Value::Nine => 9,
+            Value::Ten => 10,
+            Value::Jack => 10,
+            Value::Queen => 10,
+            Value::King => 10,
+        }
     }
 }
 
@@ -54,59 +77,59 @@ impl Deck {
 
     fn shuffled_cards() -> Vec<Card> {
         let mut cards = vec![
-            Card(Value::Ace,    Suit::Diamonds),
-            Card(Value::Two,    Suit::Diamonds),
-            Card(Value::Three,  Suit::Diamonds),
-            Card(Value::Four,   Suit::Diamonds),
-            Card(Value::Five,   Suit::Diamonds),
-            Card(Value::Six,    Suit::Diamonds),
-            Card(Value::Seven,  Suit::Diamonds),
-            Card(Value::Eight,  Suit::Diamonds),
-            Card(Value::Nine,   Suit::Diamonds),
-            Card(Value::Ten,    Suit::Diamonds),
-            Card(Value::Jack,   Suit::Diamonds),
-            Card(Value::Queen,  Suit::Diamonds),
-            Card(Value::King,   Suit::Diamonds),
-            Card(Value::Ace,    Suit::Spades),
-            Card(Value::Two,    Suit::Spades),
-            Card(Value::Three,  Suit::Spades),
-            Card(Value::Four,   Suit::Spades),
-            Card(Value::Five,   Suit::Spades),
-            Card(Value::Six,    Suit::Spades),
-            Card(Value::Seven,  Suit::Spades),
-            Card(Value::Eight,  Suit::Spades),
-            Card(Value::Nine,   Suit::Spades),
-            Card(Value::Ten,    Suit::Spades),
-            Card(Value::Jack,   Suit::Spades),
-            Card(Value::Queen,  Suit::Spades),
-            Card(Value::King,   Suit::Spades),
-            Card(Value::Ace,    Suit::Clubs),
-            Card(Value::Two,    Suit::Clubs),
-            Card(Value::Three,  Suit::Clubs),
-            Card(Value::Four,   Suit::Clubs),
-            Card(Value::Five,   Suit::Clubs),
-            Card(Value::Six,    Suit::Clubs),
-            Card(Value::Seven,  Suit::Clubs),
-            Card(Value::Eight,  Suit::Clubs),
-            Card(Value::Nine,   Suit::Clubs),
-            Card(Value::Ten,    Suit::Clubs),
-            Card(Value::Jack,   Suit::Clubs),
-            Card(Value::Queen,  Suit::Clubs),
-            Card(Value::King,   Suit::Clubs),
-            Card(Value::Ace,    Suit::Hearts),
-            Card(Value::Two,    Suit::Hearts),
-            Card(Value::Three,  Suit::Hearts),
-            Card(Value::Four,   Suit::Hearts),
-            Card(Value::Five,   Suit::Hearts),
-            Card(Value::Six,    Suit::Hearts),
-            Card(Value::Seven,  Suit::Hearts),
-            Card(Value::Eight,  Suit::Hearts),
-            Card(Value::Nine,   Suit::Hearts),
-            Card(Value::Ten,    Suit::Hearts),
-            Card(Value::Jack,   Suit::Hearts),
-            Card(Value::Queen,  Suit::Hearts),
-            Card(Value::King,   Suit::Hearts),
-            ];
+            Card{ value: Value::Ace,    suit: Suit::Diamonds },
+            Card{ value: Value::Two,    suit: Suit::Diamonds },
+            Card{ value: Value::Three,  suit: Suit::Diamonds },
+            Card{ value: Value::Four,   suit: Suit::Diamonds },
+            Card{ value: Value::Five,   suit: Suit::Diamonds },
+            Card{ value: Value::Six,    suit: Suit::Diamonds },
+            Card{ value: Value::Seven,  suit: Suit::Diamonds },
+            Card{ value: Value::Eight,  suit: Suit::Diamonds },
+            Card{ value: Value::Nine,   suit: Suit::Diamonds },
+            Card{ value: Value::Ten,    suit: Suit::Diamonds },
+            Card{ value: Value::Jack,   suit: Suit::Diamonds },
+            Card{ value: Value::Queen,  suit: Suit::Diamonds },
+            Card{ value: Value::King,   suit: Suit::Diamonds },
+            Card{ value: Value::Ace,    suit: Suit::Spades },
+            Card{ value: Value::Two,    suit: Suit::Spades },
+            Card{ value: Value::Three,  suit: Suit::Spades },
+            Card{ value: Value::Four,   suit: Suit::Spades },
+            Card{ value: Value::Five,   suit: Suit::Spades },
+            Card{ value: Value::Six,    suit: Suit::Spades },
+            Card{ value: Value::Seven,  suit: Suit::Spades },
+            Card{ value: Value::Eight,  suit: Suit::Spades },
+            Card{ value: Value::Nine,   suit: Suit::Spades },
+            Card{ value: Value::Ten,    suit: Suit::Spades },
+            Card{ value: Value::Jack,   suit: Suit::Spades },
+            Card{ value: Value::Queen,  suit: Suit::Spades },
+            Card{ value: Value::King,   suit: Suit::Spades },
+            Card{ value: Value::Ace,    suit: Suit::Clubs },
+            Card{ value: Value::Two,    suit: Suit::Clubs },
+            Card{ value: Value::Three,  suit: Suit::Clubs },
+            Card{ value: Value::Four,   suit: Suit::Clubs },
+            Card{ value: Value::Five,   suit: Suit::Clubs },
+            Card{ value: Value::Six,    suit: Suit::Clubs },
+            Card{ value: Value::Seven,  suit: Suit::Clubs },
+            Card{ value: Value::Eight,  suit: Suit::Clubs },
+            Card{ value: Value::Nine,   suit: Suit::Clubs },
+            Card{ value: Value::Ten,    suit: Suit::Clubs },
+            Card{ value: Value::Jack,   suit: Suit::Clubs },
+            Card{ value: Value::Queen,  suit: Suit::Clubs },
+            Card{ value: Value::King,   suit: Suit::Clubs },
+            Card{ value: Value::Ace,    suit: Suit::Hearts },
+            Card{ value: Value::Two,    suit: Suit::Hearts },
+            Card{ value: Value::Three,  suit: Suit::Hearts },
+            Card{ value: Value::Four,   suit: Suit::Hearts },
+            Card{ value: Value::Five,   suit: Suit::Hearts },
+            Card{ value: Value::Six,    suit: Suit::Hearts },
+            Card{ value: Value::Seven,  suit: Suit::Hearts },
+            Card{ value: Value::Eight,  suit: Suit::Hearts },
+            Card{ value: Value::Nine,   suit: Suit::Hearts },
+            Card{ value: Value::Ten,    suit: Suit::Hearts },
+            Card{ value: Value::Jack,   suit: Suit::Hearts },
+            Card{ value: Value::Queen,  suit: Suit::Hearts },
+            Card{ value: Value::King,   suit: Suit::Hearts },
+        ];
         thread_rng().shuffle(&mut cards);
         cards
     }
