@@ -9,7 +9,7 @@ pub enum Suit {
 }
 
 #[allow(dead_code)]
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum Value {
     Ace,
     Two,
@@ -76,6 +76,8 @@ impl Deck {
     }
 
     fn shuffled_cards() -> Vec<Card> {
+        // this stinks, but it'd be unsafe to try to loop for each and dynamically build this?
+        // maybe
         let mut cards = vec![
             Card{ value: Value::Ace,    suit: Suit::Diamonds },
             Card{ value: Value::Two,    suit: Suit::Diamonds },
@@ -130,6 +132,7 @@ impl Deck {
             Card{ value: Value::Queen,  suit: Suit::Hearts },
             Card{ value: Value::King,   suit: Suit::Hearts },
         ];
+        // shuffle me
         thread_rng().shuffle(&mut cards);
         cards
     }
