@@ -96,8 +96,10 @@ fn main() {
     } else {
         println!("Sorry dude.")
     }
+    play_again();
+}
 
-
+fn play_again() {
     println!("\nWould you like to play again?");
 
     let mut play_again = String::new();
