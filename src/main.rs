@@ -31,7 +31,7 @@ impl Hand {
             sum += card.value();
         }
         // Players choice, make Ace = 1 only if we go over 21
-        if sum > 21 && self.cards.iter().any (|x| x.value == deck::Value::Ace) {
+        if sum > 21 && self.cards.iter().any (|card| card.is_ace() ) {
             sum -= 10;
         }
         sum

@@ -55,6 +55,10 @@ impl Card {
             Value::King => 10,
         }
     }
+
+    pub fn is_ace(&self) -> bool {
+        self.value == Value::Ace
+    }
 }
 
 #[derive(Debug)]
