@@ -12,16 +12,12 @@ struct Hand {
 
 impl Hand {
     fn view(&self) {
-        println!("   You: {:?}", self.cards);
+        println!(" Cards: {:?}", self.cards);
         println!(" Value: {}", self.value());
     }
 
     fn busted(&self) -> bool {
-        let busted = self.value() > 21;
-        if busted {
-            println!("Aw shucks, we busted.. :(");
-        }
-        busted
+        self.value() > 21
     }
 
     fn value(&self) -> i32 {
@@ -45,14 +41,17 @@ fn main() {
     // shuffle a new deck
     let mut deck = Deck::new();
 
-    // will wanna mut so we can hit
+    let mut computer_hand = Hand {
+        cards: deck.deal(2),
+    };
+    println!("Dealer: [{:?}, X]", computer_hand.cards[0]);
+
+
     let mut player_hand = Hand {
         cards: deck.deal(2),
     };
+    println!("You:");
     player_hand.view();
-
-    let computer_hand = deck.deal(2);
-    println!("Dealer: [{:?}, X]", computer_hand[0]);
 
     let mut bust = false;
     loop {
@@ -63,20 +62,51 @@ fn main() {
         io::stdin().read_line(&mut response)
             .expect("Failed to read line");
 
-        if response.trim() == "hit" {
+        let hit_responses = ["hit", "h"];
+        let stand_responses = ["stand", "s"];
+        if hit_responses.contains(&response.trim()) {
             player_hand.cards.extend(deck.deal(1));
             player_hand.view();
             if player_hand.busted() {
+                println!("Aw shucks, we busted.. :(");
                 bust = true;
                 break;
             }
-        } else if response.trim() == "stand" {
+        } else if stand_responses.contains(&response.trim()){
             break;
         } else {
             println!("I could not understand your response. Try again.");
         }
     }
+
     if !bust {
-        println!("We're still standing.")
+        println!("Computer:");
+        computer_hand.view();
+        while computer_hand.value() < 17 {
+            computer_hand.cards.extend(deck.deal(1));
+            computer_hand.view();
+        }
+        if computer_hand.busted() || computer_hand.value() < player_hand.value() {
+            println!("YOU WIN!");
+        } else if computer_hand.value() == player_hand.value() {
+            println!("It's a tie!");
+        } else {
+            println!("You lost. :( ");
+        }
+    } else {
+        println!("Sorry dude.")
+    }
+
+
+    println!("\nWould you like to play again?");
+
+    let mut play_again = String::new();
+    io::stdin().read_line(&mut play_again)
+        .expect("Failed to read line");
+
+    let yes_responses = ["yes", "Y", "y"];
+    if yes_responses.contains(&play_again.trim()) {
+        println!("\n");
+        main();
     }
 }
