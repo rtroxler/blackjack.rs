@@ -116,9 +116,7 @@ fn play_again() {
 fn main() {
     display_welcome();
 
-    // shuffle a new deck
     let mut deck = Deck::new();
-
     let (mut computer_hand, mut player_hand) = initialize_hands(&mut deck);
 
     game_loop(&mut deck, &mut computer_hand, &mut player_hand);
