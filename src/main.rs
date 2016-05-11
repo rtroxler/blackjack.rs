@@ -39,7 +39,7 @@ impl Hand {
 }
 
 fn display_welcome() {
-    println!(")##################################");
+    println!("#########################################");
     println!("######### Welcome to Blackjack! #########");
     println!("#########################################");
 }
@@ -55,14 +55,7 @@ fn initialize_hands(deck: &mut Deck) -> (Hand, Hand){
     ( computer_hand, player_hand )
 }
 
-fn main() {
-    display_welcome();
-
-    // shuffle a new deck
-    let mut deck = Deck::new();
-
-    let (mut computer_hand, mut player_hand) = initialize_hands(&mut deck);
-
+fn game_loop(deck: &mut Deck, computer_hand: &mut Hand, player_hand: &mut Hand) {
     let mut bust = false;
     loop {
         println!("\nWould you like to hit or stand?");
@@ -75,7 +68,7 @@ fn main() {
         let stand_responses = ["stand", "s"];
 
         if hit_responses.contains(&response.trim()) {
-            player_hand.hit(&mut deck);
+            player_hand.hit(&mut *deck);
             if player_hand.busted() {
                 println!("Aw shucks, we busted.. :(");
                 bust = true;
@@ -92,7 +85,7 @@ fn main() {
         println!("Computer:");
         computer_hand.view();
         while computer_hand.value() < 17 {
-            computer_hand.hit(&mut deck);
+            computer_hand.hit(&mut *deck);
         }
         if computer_hand.busted() || computer_hand.value() < player_hand.value() {
             println!("YOU WIN!");
@@ -104,7 +97,6 @@ fn main() {
     } else {
         println!("Sorry dude.")
     }
-    play_again();
 }
 
 fn play_again() {
@@ -120,3 +112,17 @@ fn play_again() {
         main();
     }
 }
+
+fn main() {
+    display_welcome();
+
+    // shuffle a new deck
+    let mut deck = Deck::new();
+
+    let (mut computer_hand, mut player_hand) = initialize_hands(&mut deck);
+
+    game_loop(&mut deck, &mut computer_hand, &mut player_hand);
+
+    play_again();
+}
+
