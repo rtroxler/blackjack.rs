@@ -2,7 +2,6 @@ extern crate rand;
 pub mod deck;
 
 use std::io;
-use std::str;
 use deck::Deck;
 use deck::Card;
 
@@ -17,10 +16,13 @@ impl Hand {
         println!(" Value: {}", self.value());
     }
 
-    // TODO: fix this cause it makes sense
-    //fn hit(&self) {
-        //self.cards.extend(deck.deal(1));
-    //}
+    fn busted(&self) -> bool {
+        let busted = self.value() > 21;
+        if busted {
+            println!("Aw shucks, we busted.. :(");
+        }
+        busted
+    }
 
     fn value(&self) -> i32 {
         let mut sum = 0;
@@ -64,10 +66,17 @@ fn main() {
         if response.trim() == "hit" {
             player_hand.cards.extend(deck.deal(1));
             player_hand.view();
+            if player_hand.busted() {
+                bust = true;
+                break;
+            }
         } else if response.trim() == "stand" {
             break;
         } else {
             println!("I could not understand your response. Try again.");
         }
+    }
+    if !bust {
+        println!("We're still standing.")
     }
 }
