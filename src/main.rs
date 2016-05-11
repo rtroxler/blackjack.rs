@@ -16,6 +16,11 @@ impl Hand {
         println!(" Value: {}", self.value());
     }
 
+    fn hit(&mut self, deck: &mut Deck) {
+        self.cards.extend(deck.deal(1));
+        self.view();
+    }
+
     fn busted(&self) -> bool {
         self.value() > 21
     }
@@ -63,15 +68,14 @@ fn main() {
         println!("\nWould you like to hit or stand?");
 
         let mut response = String::new();
-
         io::stdin().read_line(&mut response)
             .expect("Failed to read line");
 
         let hit_responses = ["hit", "h"];
         let stand_responses = ["stand", "s"];
+
         if hit_responses.contains(&response.trim()) {
-            player_hand.cards.extend(deck.deal(1));
-            player_hand.view();
+            player_hand.hit(&mut deck);
             if player_hand.busted() {
                 println!("Aw shucks, we busted.. :(");
                 bust = true;
@@ -88,8 +92,7 @@ fn main() {
         println!("Computer:");
         computer_hand.view();
         while computer_hand.value() < 17 {
-            computer_hand.cards.extend(deck.deal(1));
-            computer_hand.view();
+            computer_hand.hit(&mut deck);
         }
         if computer_hand.busted() || computer_hand.value() < player_hand.value() {
             println!("YOU WIN!");
