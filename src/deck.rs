@@ -1,14 +1,11 @@
-//extern crate rand;
 use rand::{thread_rng, Rng};
 use std::fmt;
 
-#[allow(dead_code)]
 #[derive(Debug)]
 pub enum Suit {
     Diamonds, Hearts, Spades, Clubs
 }
 
-#[allow(dead_code)]
 #[derive(Debug, PartialEq)]
 pub enum Value {
     Ace,
