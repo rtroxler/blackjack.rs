@@ -33,25 +33,30 @@ impl Hand {
     }
 }
 
-fn main() {
-    println!("#########################################");
+fn display_welcome() {
+    println!(")##################################");
     println!("######### Welcome to Blackjack! #########");
     println!("#########################################");
+}
+
+fn initialize_hands(deck: &mut Deck) -> (Hand, Hand){
+    let computer_hand = Hand { cards: deck.deal(2), };
+    println!("Dealer: [{:?}, X]", computer_hand.cards[0]);
+
+    let player_hand = Hand { cards: deck.deal(2), };
+    println!("You:");
+    player_hand.view();
+
+    ( computer_hand, player_hand )
+}
+
+fn main() {
+    display_welcome();
 
     // shuffle a new deck
     let mut deck = Deck::new();
 
-    let mut computer_hand = Hand {
-        cards: deck.deal(2),
-    };
-    println!("Dealer: [{:?}, X]", computer_hand.cards[0]);
-
-
-    let mut player_hand = Hand {
-        cards: deck.deal(2),
-    };
-    println!("You:");
-    player_hand.view();
+    let (mut computer_hand, mut player_hand) = initialize_hands(&mut deck);
 
     let mut bust = false;
     loop {
