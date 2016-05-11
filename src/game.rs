@@ -59,11 +59,7 @@ impl Game {
     pub fn start(&mut self) {
         let mut bust = false;
         loop {
-            println!("\nWould you like to hit or stand?");
-
-            let mut response = String::new();
-            io::stdin().read_line(&mut response)
-                .expect("Failed to read line");
+            let response = hit_or_stand();
 
             let hit_responses = ["hit", "h"];
             let stand_responses = ["stand", "s"];
@@ -101,6 +97,15 @@ impl Game {
     }
 }
 
+fn hit_or_stand() -> String {
+    println!("\nWould you like to hit or stand?");
+
+    let mut response = String::new();
+    io::stdin().read_line(&mut response)
+        .expect("Failed to read line");
+
+    response
+}
 
 fn initialize_hands(deck: &mut Deck) -> (Hand, Hand){
     let computer_hand = Hand { cards: deck.deal(2), };
